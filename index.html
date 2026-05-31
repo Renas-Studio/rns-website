@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="RNS – Künstler. Die Umarmung der Schlange." />
+<title>RNS</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg:#0f0e0d;
+  --warm:#e8e0d4;
+  --gold:#b89460;
+  --muted:rgba(232,224,212,0.35);
+  --line:rgba(232,224,212,0.08);
+  --serif:'Playfair Display',serif;
+  --sans:'Jost',sans-serif;
+}
+
+/* ===== BODY ===== */
+body{
+  background:var(--bg);
+  color:var(--warm);
+  font-family:var(--sans);
+  overflow-x:hidden;
+}
+
+/* ===== ATMOSPHERE (Film + Grain) ===== */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 30%, rgba(184,148,96,0.08), transparent 60%),
+    radial-gradient(circle at 50% 70%, rgba(0,0,0,0.7), transparent 70%);
+  opacity:1;
+}
+
+/* Grain */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.25'/%3E%3C/svg%3E");
+  opacity:0.04;
+}
+
+/* ===== HERO ===== */
+#hero{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  position:relative;
+}
+
+/* vertical lines decor */
+#hero::before,
+#hero::after{
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:1px;
+  background:var(--line);
+}
+#hero::before{left:10%}
+#hero::after{right:10%}
+
+.hero-name{
+  font-family:var(--serif);
+  font-size:clamp(4rem,12vw,10rem);
+  letter-spacing:0.05em;
+}
+
+.hero-sub{
+  color:var(--gold);
+  letter-spacing:0.3em;
+  font-size:0.7rem;
+  margin-bottom:1rem;
+}
+
+/* ===== ABOUT ===== */
+#about{
+  padding:8rem 2rem;
+  text-align:center;
+  border-top:1px solid var(--line);
+}
+
+#about p{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:1.5rem;
+  opacity:0.9;
+}
+
+/* ===== WORK ===== */
+#work{
+  padding:8rem 2rem;
+  border-top:1px solid var(--line);
+  display:flex;
+  justify-content:center;
+}
+
+.wrapper{
+  max-width:720px;
+  width:100%;
+}
+
+/* FRAME (Museum Look) */
+.frame{
+  position:relative;
+  padding:2.5rem;
+  background:rgba(20,18,16,0.9);
+  box-shadow:
+    0 30px 80px rgba(0,0,0,0.6),
+    0 0 0 1px rgba(232,224,212,0.06);
+  cursor:zoom-in;
+  transition:0.4s;
+}
+
+/* subtle spotlight glow */
+.frame::before{
+  content:"";
+  position:absolute;
+  inset:-20%;
+  background:radial-gradient(circle at 50% 40%, rgba(184,148,96,0.12), transparent 60%);
+  opacity:0.6;
+  pointer-events:none;
+}
+
+.frame:hover{
+  transform:translateY(-3px);
+  box-shadow:
+    0 40px 110px rgba(0,0,0,0.7),
+    0 0 0 1px rgba(184,148,96,0.18);
+}
+
+#artworkImage{
+  width:100%;
+  aspect-ratio:4/5;
+  object-fit:cover;
+  display:block;
+}
+
+/* caption */
+.title{
+  margin-top:2rem;
+  text-align:center;
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:1.4rem;
+  color:var(--warm);
+}
+
+.small{
+  text-align:center;
+  font-size:0.7rem;
+  letter-spacing:0.25em;
+  color:var(--muted);
+  margin-top:0.6rem;
+}
+
+/* ===== LIGHTBOX ===== */
+.lightbox{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  pointer-events:none;
+  transition:0.4s;
+}
+
+.lightbox.open{
+  background:rgba(0,0,0,0.96);
+  opacity:1;
+  pointer-events:all;
+}
+
+.lightbox img{
+  max-width:90vw;
+  max-height:85vh;
+  box-shadow:0 30px 120px rgba(0,0,0,0.7);
+}
+
+.close{
+  position:absolute;
+  top:2rem;
+  right:2rem;
+  color:var(--warm);
+  font-size:0.7rem;
+  letter-spacing:0.25em;
+  cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<section id="hero">
+  <div>
+    <div class="hero-sub">KUNST & ZEICHNUNG</div>
+    <div class="hero-name">RNS</div>
+  </div>
+</section>
+
+<section id="about">
+  <p>Ich male und zeichne seit über 10 Jahren.</p>
+</section>
+
+<section id="work">
+  <div class="wrapper">
+
+    <div class="frame" id="open">
+      <img src="DieUmarmung.jpg" id="artworkImage" alt="Die Umarmung der Schlange">
+    </div>
+
+    <div class="title">Die Umarmung der Schlange</div>
+    <div class="small">ORIGINAL WORK</div>
+
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <div class="close" id="close">SCHLIESSEN ✕</div>
+  <img src="DieUmarmung.jpg">
+</div>
+
+<script>
+const lb=document.getElementById("lightbox");
+const open=document.getElementById("open");
+const close=document.getElementById("close");
+
+open.onclick=()=>{lb.classList.add("open");document.body.style.overflow="hidden";}
+close.onclick=()=>{lb.classList.remove("open");document.body.style.overflow="";}
+lb.onclick=e=>{if(e.target===lb)close.onclick();}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")close.onclick();});
+</script>
+
+</body>
+</html>
